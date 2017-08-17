@@ -4,6 +4,7 @@
 [bits 32]
 
 start:
+init_register:
   mov bx, SData_Selector
   mov ds, bx
   mov es, bx
@@ -11,6 +12,28 @@ start:
   mov gs, bx
   mov ss, bx
 
+init_idt:
+  cld
+  mov ax, SData_Selector
+  mov es, ax
+  xor eax, eax
+  xor ecx, ecx
+  mov ax, 256
+  mov edi, 0
+
+init_idt_loop:
+  lea esi, [idt_ignore]
+  mov cx, 8
+  rep movsb
+  dec ax
+  jnz init_idt_loop
+
+init_idt_end:
+  lidt [idtr]
+  sti
+  int 0x77
+
+end:
   xor eax, eax
   mov ax, Video_Selector
   mov es, ax
@@ -18,12 +41,11 @@ start:
   lea esi, [msg_pm]
   call puts
 
-end:
   hlt
   jmp $
 
 ;------------------------------------
-; Routines
+; Sub Routines
 ;------------------------------------
 puts:
   push eax
@@ -46,8 +68,8 @@ puts_end:
 ;------------------------------------
 ; Data Area
 ;------------------------------------
-msg_pm:
-  db "We are in Protected Mode", 0
+msg_pm db "We are in Protected Mode", 0
+msg_isr_ignore db "This is an ignorable interrupt", 0
 
 ;------------------------------------
 ; Interrupt Service Routines
@@ -64,7 +86,7 @@ isr_ignore:
   mov es, ax
   mov edi, (80*7*2)
   lea esi, [msg_isr_ignore]
-  call printf
+  call puts
 
   popfd
   popad
