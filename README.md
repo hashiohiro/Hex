@@ -19,15 +19,13 @@ Hex installation target is a floppy disk.
 the image's size is 1440 KB.
 
 ``` bash
-qemu-img create -f raw floppy.img 1440k
+qemu-img create -f raw hex.img 1440k
 ```
 
 ### 2. Assemble the boot loader and kernel
 
 ``` bash
-nasm -f bin -o loader.bin loader.asm
-nasm -f bin -o kernel.bin kernel.asm
-cat loader.bin kernel.bin > hex.bin
+nasm -f bin -o loader.bin loader.asm && nasm -f bin -o kernel.bin kernel.asm && cat loader.bin kernel.bin > hex.bin
 ```
 
 ### 3. Write the assembled Hex to disk image
