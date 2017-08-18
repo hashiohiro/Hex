@@ -11,8 +11,13 @@ version   : 2.13.01
 site    : [www.qemu.org](https://www.qemu.org/)
 version : 2.9.0
 
-## Install
+## Compile & Try
 
+``` bash
+make
+```
+
+## Details of the compile
 ### 1. Make an empty disk image
 
 Hex installation target is a floppy disk.
