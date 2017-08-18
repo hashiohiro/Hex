@@ -22,4 +22,4 @@ run: hex.img
 
 .PHONY clean:
 clean:
-	rm loader.bin kernel.bin
+	rm loader.bin kernel.bin hex.bin
