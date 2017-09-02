@@ -4,12 +4,15 @@ default: compile link run
 .PHONY compile:
 compile:
 	nasm -f bin -o loader.bin loader.asm
-	nasm -f bin -o kernel.bin kernel.asm
+	nasm -f bin -o setup.bin setup.asm
+# i386-elf-gcc -c kernel.c
+# i386-elf-ld -Ttext 
 
 
 .PHONY link:
-link: loader.bin kernel.bin
-	cat loader.bin kernel.bin > hex.bin
+link: loader.bin setup.bin
+	cat loader.bin setup.bin > hex.bin
+# ld -o kernel -Ttext 0x
 
 .PHONY img:
 img: hex.img
@@ -18,8 +21,8 @@ img: hex.img
 
 .PHONY run:
 run: hex.img
-	qemu-system-i386 -drive file=hex.img,format=raw,if=floppy -boot a
+	qemu-system-i386 -drive file=hex.img,format=raw,if=floppy -boot a -monitor stdio
 
 .PHONY clean:
 clean:
-	rm loader.bin kernel.bin hex.bin
+	rm loader.bin setup.bin hex.bin
