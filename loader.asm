@@ -25,6 +25,75 @@ read:
 
   jc read
 
+; Turn off the floppy disk motor.
+  mov dx, 0x3f2
+  xor al, al
+  out dx, al
+
+; "PIC Initialize phase"
+; 1. Execute ICW1: Set policy to use pic.
+; 2. Execute ICW2: Set interrupt orign in (master/slave) pic.
+; 3. Execute ICW3: Set irq that the (master/slave) is connected to (master/slave) pic.
+; 4. Execute ICW4: Setting the use of 8086 mode.
+; 5. Suppress interruptes: Suppress all interrupts of the (master/slave) PIC.
+; [Notes]
+;   About "0x00eb"
+;     0x00eb is equivalent to jmp $ + 2.
+;     In this section 0x00eb is used to generate a delay.
+
+; Execute ICW1
+; (master)
+mov al, 0x11
+out 0x20, al ; master pic
+dw 0x00eb, 0x00eb ;jmp$+2 jmp$+2
+
+; (slave)
+out 0xa0, al ; slave pic
+dw 0x00eb, 0x00eb
+
+; Execute ICW2
+; (master)
+mov al, 0x20
+out 0x20, al
+dw 0x00eb, 0x00eb
+
+; (slave)
+mov al, 0x28
+out 0xa0, al
+dw 0x00eb, 0x00eb
+
+; Execute ICW3
+; (master)
+mov al, 0x04
+out 0x21, al
+dw 0x00eb, 0x00eb
+
+; (slave)
+mov al, 0x02
+out 0xa1, al
+dw 0x00eb, 0x00eb
+
+; Execute ICW4
+; (master)
+mov al, 0x01
+out 0x21, al
+dw 0x00eb, 0x00eb
+
+; (slave)
+out 0xa1, al
+dw 0x00eb, 0x00eb
+
+; Suppress interruptes
+; (slave)
+mov al, 0xff
+out 0xa1, al
+dw 0x00eb, 0x00eb
+
+; (master)
+mov al, 0xfb
+out 0x21, al
+dw 0x00eb, 0x00eb
+
 ; "Prepare phase"
 ; 1. Set 32 bits effective in cr0 register.
 ; 2. Initialize cpu units. 
