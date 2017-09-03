@@ -1,4 +1,17 @@
 ; Define some selectors.
-SCode_Selector equ 0x08       ; System Code Selector
-SData_Selector equ 0x10       ; System Data Selector
-Video_Selector equ 0x18       ; Video Selector
+SCodeSelector equ 0x08       ; System Code Selector
+SDataSelector equ 0x10       ; System Data Selector
+VideoSelector equ 0x18       ; Video Selector
+TSS1Selector  equ 0x20
+TSS2Selector  equ 0x28
+
+; Define keyboard LED status information location
+KeyboardLEDs  equ 0x0ff1
+
+; Define the location of video mode information
+VideoMode     equ 0x0ff2
+ScreenX       equ 0x0ff4
+ScreenY       equ 0x0ff6
+VRAMOrigin    equ 0x0ff8
+
+ReadSectors   equ 2

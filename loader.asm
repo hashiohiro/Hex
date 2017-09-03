@@ -3,6 +3,23 @@
 [org 0x07c00]
 
 init:
+
+; Initialize display(vga graphics 320x200x8BitColor).
+;  mov al, 0x13
+;  mov ah, 0x00
+;  int 0x10
+
+;  mov byte  [VideoMode], 8
+;  mov word  [ScreenX], 320
+;  mov word  [ScreenY], 200
+;  mov dword [VRAMOrigin], 0x000a0000
+
+; Set current Keyboard LEDs status.
+  mov ah, 0x02
+  int 0x16
+  mov [KeyboardLEDs], al
+
+; Initialize registers
   mov ax, cs  
   mov ds, ax
   mov es, ax
@@ -16,7 +33,7 @@ read:
   mov bx, 0
 
   mov ah, 2
-  mov al, 1                   ; Number of sectors to be loaded
+  mov al, ReadSectors        ; Number of sectors to be loaded
   mov ch, 0                   ; Cylinder
   mov cl, 2                   ; Sector
   mov dh, 0                   ; Head
@@ -54,12 +71,12 @@ dw 0x00eb, 0x00eb
 ; Execute ICW2
 ; (master)
 mov al, 0x20
-out 0x20, al
+out 0x21, al
 dw 0x00eb, 0x00eb
 
 ; (slave)
 mov al, 0x28
-out 0xa0, al
+out 0xa1, al
 dw 0x00eb, 0x00eb
 
 ; Execute ICW3
@@ -121,7 +138,7 @@ prepare:
   nop
 
 ; initialize 16bits registers
-  mov bx, SData_Selector
+  mov bx, SDataSelector
   mov ds, bx
   mov es, bx
   mov fs, bx
@@ -129,7 +146,7 @@ prepare:
   mov ss, bx
 
 ; shift to 32bits protected mode!
-  jmp dword SCode_Selector:0x10000
+  jmp dword SCodeSelector:0x10000
 
 gdtr:
   dw gdt_end-gdt-1

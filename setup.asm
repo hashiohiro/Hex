@@ -5,7 +5,7 @@
 
 start:
 init_register:
-  mov bx, SData_Selector
+  mov bx, SDataSelector
   mov ds, bx
   mov es, bx
   mov fs, bx
@@ -14,7 +14,7 @@ init_register:
 
 init_idt:
   cld
-  mov ax, SData_Selector
+  mov ax, SDataSelector
   mov es, ax
   xor eax, eax
   xor ecx, ecx
@@ -28,25 +28,40 @@ init_idt_loop:
   dec ax
   jnz init_idt_loop
 
-init_idt_end:
+overwrite_idt:
+  mov edi, 0
+  lea esi, [idt_zero_devide]
+  mov cx, 8
+  rep movsb
+  
+  mov edi, 8*0x20
+  lea esi, [idt_32_timer]
+  mov cx, 8
+  rep movsb
+
+  mov edi, 8*0x021
+  lea esi, [idt_33_keyboard]
+  mov cx, 8
+  rep movsb
+
+load_idt:
   lidt [idtr]
+
+; enable timer interrupt
+  mov al, 0xfc
+  out 0x21, al
   sti
-  int 0x77
 
 end:
-  xor eax, eax
-  mov ax, Video_Selector
-  mov es, ax
-  mov edi, 80*2*10+2*10
-  lea esi, [msg_pm]
-  call puts
-
-  hlt
   jmp $
 
 ;------------------------------------
 ; Sub Routines
 ;------------------------------------
+; puts
+; esi = source string
+; edi = distination string
+
 puts:
   push eax
 
@@ -70,6 +85,9 @@ puts_end:
 ;------------------------------------
 msg_pm db "We are in Protected Mode", 0
 msg_isr_ignore db "This is an ignorable interrupt", 0
+msg_isr_zero_devide db "Zero Devide Exception!", 0
+msg_isr_32_timer db "Timer interrupt", 0
+msg_isr_33_keyboard db "Keyboard interrupt", 0
 
 ;------------------------------------
 ; Interrupt Service Routines
@@ -82,7 +100,7 @@ isr_ignore:
   pushad
   pushfd
 
-  mov ax, Video_Selector
+  mov ax, VideoSelector
   mov es, ax
   mov edi, (80*7*2)
   lea esi, [msg_isr_ignore]
@@ -97,6 +115,89 @@ isr_ignore:
 
   iret
 
+isr_zero_devide:
+  push gs
+  push fs
+  push es
+  push ds
+  pushad
+  pushfd
+  
+  mov al, 0x20
+  out 0x20, al
+
+  mov ax, VideoSelector
+  mov es, ax
+  mov edi, (80*6*2)
+  lea esi, [msg_isr_zero_devide]
+  call puts
+
+  jmp $
+
+  popfd
+  popad
+  pop ds
+  pop es
+  pop fs
+  pop gs
+
+  iret
+
+isr_32_timer:
+  push gs
+  push fs
+  push es
+  push ds
+  pushad
+  pushfd
+
+  mov al, 0x20
+  out 0x20, al
+
+  mov ax, VideoSelector
+  mov es, ax
+  mov edi, (80*2*2)
+  lea esi, [msg_isr_32_timer]
+  call puts
+  inc byte [msg_isr_32_timer]
+
+  popfd
+  popad
+  pop ds
+  pop es
+  pop fs
+  pop gs
+
+  iret
+
+isr_33_keyboard:
+  pushad
+  push gs
+  push fs
+  push es
+  push ds
+  pushfd
+
+  in al, 0x60
+
+  mov al, 0x20
+  out 0x20, al
+  mov ax, VideoSelector
+  mov es, ax
+  mov edi, (80*4*2)
+  lea esi, [msg_isr_33_keyboard]
+  call puts
+  inc byte [msg_isr_33_keyboard]
+
+  popfd
+  pop ds
+  pop es
+  pop fs
+  pop gs
+  popad
+  iret
+
+
 ;------------------------------------
 ; IDT
 ;------------------------------------
@@ -106,9 +207,30 @@ idtr:
 
 idt_ignore:
   dw isr_ignore
-  dw SCode_Selector
+  dw SCodeSelector
   db 0
   db 0x8e
   dw 0x0001
 
-times 512-($-$$) db 0
+idt_zero_devide:
+  dw isr_zero_devide
+  dw 0x08
+  db 0
+  db 0x8e
+  dw 0x0001
+
+idt_32_timer:
+  dw isr_32_timer
+  dw SCodeSelector
+  db 0
+  db 0x8e
+  dw 0x0001
+
+idt_33_keyboard:
+  dw isr_33_keyboard
+  dw 0x08
+  db 0
+  db 0x8e
+  dw 0x0001
+
+times 1024-($-$$) db 0
