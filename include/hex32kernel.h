@@ -12,10 +12,8 @@
 #define COL8_848400 11
 #define COL8_000084 12
 #define COL8_840084 13
-#define COL8_008484 13
+#define COL8_008484 14
 #define COL8_848484 15
 
 void InitializePalette(void);
-void SetPalette(int start, int end, unsigned char *rgb);
-void BoxFill8(unsigned char * vram, int xsize, unsigned char c, int x0, int y0, int x1, int y1);
 

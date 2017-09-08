@@ -1,4 +1,4 @@
-%include "consts.asm"
+%include "loaderconf.inc"
 
 [org 0x10000]
 [bits 32]
