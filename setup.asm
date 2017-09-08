@@ -53,7 +53,7 @@ load_idt:
   sti
 
 end:
-  jmp $
+  jmp 0x10400
 
 ;------------------------------------
 ; Sub Routines

@@ -14,4 +14,4 @@ ScreenX       equ 0x0ff4
 ScreenY       equ 0x0ff6
 VRAMOrigin    equ 0x0ff8
 
-ReadSectors   equ 2
+ReadSectors   equ 18

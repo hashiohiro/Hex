@@ -5,14 +5,14 @@
 init:
 
 ; Initialize display(vga graphics 320x200x8BitColor).
-;  mov al, 0x13
-;  mov ah, 0x00
-;  int 0x10
+  mov al, 0x13
+  mov ah, 0x00
+  int 0x10
 
-;  mov byte  [VideoMode], 8
-;  mov word  [ScreenX], 320
-;  mov word  [ScreenY], 200
-;  mov dword [VRAMOrigin], 0x000a0000
+  mov byte  [VideoMode], 8
+  mov word  [ScreenX], 320
+  mov word  [ScreenY], 200
+  mov dword [VRAMOrigin], 0x000a0000
 
 ; Set current Keyboard LEDs status.
   mov ah, 0x02
