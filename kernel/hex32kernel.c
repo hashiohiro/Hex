@@ -1,5 +1,5 @@
-#include "hex32core.h"
-#include "hex32kernel.h"
+#include <hex32core.h>
+#include <hex32kernel.h>
 
 void HexMain(void)
 {
