@@ -1,4 +1,4 @@
-%include "loaderconf.inc"
+%include "allocmap.asm"
 
 [org 0x07c00]
 
@@ -9,6 +9,7 @@ init:
   mov ah, 0x00
   int 0x10
 
+  mov byte  [ReadSectors], 18
   mov byte  [VideoMode], 8
   mov word  [ScreenX], 320
   mov word  [ScreenY], 200
@@ -33,7 +34,7 @@ read:
   mov bx, 0
 
   mov ah, 2
-  mov al, ReadSectors        ; Number of sectors to be loaded
+  mov al, byte [ReadSectors]        ; Number of sectors to be loaded
   mov ch, 0                   ; Cylinder
   mov cl, 2                   ; Sector
   mov dh, 0                   ; Head

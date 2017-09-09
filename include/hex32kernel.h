@@ -16,4 +16,11 @@
 #define COL8_848484 15
 
 void InitializePalette(void);
+void InitScreen(unsigned char* vram, int screenx, int screeny);
 
+struct LoaderConf
+{
+  unsigned char ReadSectors, KeyboardLEDs, VideoMode, Reserved;
+  short ScreenX, ScreenY;
+  unsigned char* VRAMOrigin;
+};
