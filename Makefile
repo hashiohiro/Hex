@@ -14,7 +14,7 @@ compile: arch/x86/boot/loader.asm arch/x86/entry/setup.asm arch/x86/kernel/hex32
 	nasm -f coff -i $(nasminc) -o $(tmpoutput_dir)/hex32core_asm.o arch/x86/kernel/hex32core.asm
 	i386-elf-gcc -I $(gccinc)  -o $(tmpoutput_dir)/hex32core.o -c kernel/hex32core.c
 	i386-elf-gcc -I $(gccinc)  -o $(tmpoutput_dir)/hex32kernel.o -c kernel/hex32kernel.c
-	./tools/BitmapFontGenerator/bin/BitmapFontGenerator.o ./fonts/hankaku.txt ./fonts/hankaku.c
+	./tools/BitmapFontGenerator/bin/BitmapFontGenerator.o ./fonts/bitmap/hexgothic.txt ./fonts/hexgothic.c
 
 .PHONY link:
 link: bin/tmp/loader.bin $(tmpoutput_dir)/setup.bin $(tmpoutput_dir)/hex32kernel.o $(tmpoutput_dir)/hex32core_asm.o $(tmpoutput_dir)/hex32core.o

@@ -26,7 +26,7 @@ int main(int argc, char **argv)
   fputs("#define _ )*2\n", out);
   fputs("#define  ((((((((0\n", out);
   fputs("\n", out);
-  fputs("char hankaku[4096] = {\n", out);
+  fputs("char fontbody[4096] = {\n", out);
 
   int i = 1;
   char s[12];
