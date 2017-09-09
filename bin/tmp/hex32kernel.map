@@ -1,0 +1,85 @@
+
+メモリ設定
+
+名前           原点             長さ             属性
+*default*        0x0000000000000000 0xffffffffffffffff
+
+リンカスクリプトおよびメモリマップ
+
+                0x0000000000010400                . = 0x10400
+
+.text           0x0000000000010400      0x53a
+                0x0000000000010400                _text_start = .
+ *(.text)
+ .text          0x0000000000010400      0x3fb ./bin/tmp/hex32kernel.o
+                0x0000000000010400                HexMain
+                0x0000000000010450                InitializePalette
+                0x0000000000010475                InitScreen
+ *fill*         0x00000000000107fb        0x1 
+ .text          0x00000000000107fc       0x4f ./bin/tmp/hex32core_asm.o
+                0x00000000000107fc                OpHLT
+                0x00000000000107fe                OpCLI
+                0x0000000000010800                OpSTI
+                0x0000000000010802                OpSTIHLT
+                0x0000000000010805                OpIn8
+                0x0000000000010810                OpIn16
+                0x000000000001081c                OpIn32
+                0x0000000000010822                OpOut8
+                0x000000000001082c                OpOut16
+                0x0000000000010837                OpOut32
+                0x0000000000010841                LoadEFlags
+                0x0000000000010844                StoreEFlags
+ .text          0x000000000001084b       0xef ./bin/tmp/hex32core.o
+                0x000000000001084b                SetPalette
+                0x00000000000108eb                BoxFill8
+                0x000000000001093a                _text_end = .
+
+.iplt           0x0000000000010940        0x0
+ .iplt          0x0000000000010940        0x0 ./bin/tmp/hex32kernel.o
+
+.rodata         0x000000000001093a        0x0
+                0x000000000001093a                _rodata_start = .
+ *(.rodata)
+                0x000000000001093a                _rodata_end = .
+
+.eh_frame       0x000000000001093c       0xbc
+ .eh_frame      0x000000000001093c       0x7c ./bin/tmp/hex32kernel.o
+ .eh_frame      0x00000000000109b8       0x40 ./bin/tmp/hex32core.o
+                                         0x58 (緩和前のサイズ)
+
+.rel.dyn        0x00000000000109f8        0x0
+ .rel.got       0x00000000000109f8        0x0 ./bin/tmp/hex32kernel.o
+ .rel.iplt      0x00000000000109f8        0x0 ./bin/tmp/hex32kernel.o
+ .rel.text      0x00000000000109f8        0x0 ./bin/tmp/hex32kernel.o
+
+.data           0x0000000000010a00       0x30
+                0x0000000000010a00                _data_start = .
+ *(.data)
+ .data          0x0000000000010a00       0x30 ./bin/tmp/hex32kernel.o
+ .data          0x0000000000010a30        0x0 ./bin/tmp/hex32core.o
+                0x0000000000010a30                _data_end = .
+
+.got            0x0000000000010a30        0x0
+ .got           0x0000000000010a30        0x0 ./bin/tmp/hex32kernel.o
+
+.got.plt        0x0000000000010a30        0x0
+ .got.plt       0x0000000000010a30        0x0 ./bin/tmp/hex32kernel.o
+
+.igot.plt       0x0000000000010a30        0x0
+ .igot.plt      0x0000000000010a30        0x0 ./bin/tmp/hex32kernel.o
+
+.bss            0x0000000000010a30        0x0
+                0x0000000000010a30                _bss_start = .
+ *(.bss)
+ .bss           0x0000000000010a30        0x0 ./bin/tmp/hex32kernel.o
+ .bss           0x0000000000010a30        0x0 ./bin/tmp/hex32core.o
+                0x0000000000010a30                _bss_end = .
+LOAD ./bin/tmp/hex32kernel.o
+LOAD ./bin/tmp/hex32core_asm.o
+LOAD ./bin/tmp/hex32core.o
+OUTPUT(./bin/tmp/hex32_tmp.o elf32-i386)
+
+.comment        0x0000000000000000       0x11
+ .comment       0x0000000000000000       0x11 ./bin/tmp/hex32kernel.o
+                                         0x12 (緩和前のサイズ)
+ .comment       0x0000000000000011       0x12 ./bin/tmp/hex32core.o
