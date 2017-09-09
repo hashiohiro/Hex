@@ -1,4 +1,4 @@
-%include "loaderconf.inc"
+%include "allocmap.asm"
 
 [org 0x10000]
 [bits 32]
