@@ -1,3 +1,7 @@
+#include <hex32graphic.h>
+
+extern char CURBitmap[16][16];
+
 void SetPalette(int start, int end, unsigned char *rgb)
 {
   int i, eflags;
@@ -91,6 +95,21 @@ void PutFont(char *vram, int vramx, int x, int y, char color, char *font)
   return;
 }
 
+void PutBMPImage(char *vram, int vramx, int picturex, int picturey,
+  int posx, int posy, char *bmap, int bufferx)
+{
+  int x, y;
+
+  for (y = 0; y < picturey; y++)
+  {
+    for (x = 0; x < picturex; x++)
+    {
+      vram[(posy + y) * vramx + (posx + x)] = bmap[y * bufferx + x];
+    }
+  }
+  return;
+}
+
 void PutString(char *vram, int vramx, int x, int y, char color, char *bmap, unsigned char *string)
 {
   for (; *string != 0x00; string++)
@@ -99,5 +118,54 @@ void PutString(char *vram, int vramx, int x, int y, char color, char *bmap, unsi
     x += 8;
   }
 
+  return;
+}
+
+void InitMouseCursor(char *mouse, char bc)
+{
+  int x, y;
+
+  for (y = 0; y < 16; y++)
+  {
+    for (x = 0; x < 16; x++)
+    {
+      if (CURBitmap[y][x] == '*')
+      {
+        mouse[y * 16 + x] = COL8_000000;
+      }
+
+      if (CURBitmap[y][x] == 'O')
+      {
+        mouse[y * 16 + x] = COL8_ffffff;
+      }
+
+      if (CURBitmap[y][x] == '.')
+      {
+        mouse[y * 16 + x] = bc;
+      }
+    }
+  }
+
+  return;
+}
+
+void InitScreen(unsigned char* vram, int screenx, int screeny)
+{
+  BoxFill(vram, screenx, COL8_008484,            0,            0, screenx -  1, screeny - 29);
+  BoxFill(vram, screenx, COL8_c6c6c6,            0, screeny - 28, screenx -  1, screeny - 28);
+  BoxFill(vram, screenx, COL8_ffffff,            0, screeny - 27, screenx -  1, screeny - 27);
+  BoxFill(vram, screenx, COL8_c6c6c6,            0, screeny - 26, screenx -  1, screeny -  1);
+
+  BoxFill(vram, screenx, COL8_ffffff,            3, screeny - 24,           59, screeny - 24);
+  BoxFill(vram, screenx, COL8_ffffff,            2, screeny - 24,            2, screeny -  4);
+  BoxFill(vram, screenx, COL8_848484,            3, screeny -  4,           59, screeny -  4);
+  BoxFill(vram, screenx, COL8_848484,           59, screeny - 23,           59, screeny -  5);
+  BoxFill(vram, screenx, COL8_000000,            2, screeny -  3,           59, screeny -  3);
+  BoxFill(vram, screenx, COL8_000000,           60, screeny - 24,           60, screeny -  3);
+
+  BoxFill(vram, screenx, COL8_848484, screenx - 47, screeny - 24, screenx -  4, screeny - 24);
+  BoxFill(vram, screenx, COL8_848484, screenx - 47, screeny - 23, screenx - 47, screeny -  4);
+  BoxFill(vram, screenx, COL8_ffffff, screenx - 47, screeny -  3, screenx -  4, screeny -  3);
+  BoxFill(vram, screenx, COL8_ffffff, screenx -  3, screeny - 24, screenx -  3, screeny -  3);
   return;
 }

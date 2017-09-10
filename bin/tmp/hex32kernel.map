@@ -8,82 +8,96 @@
 
                 0x0000000000010400                . = 0x10400
 
-.text           0x0000000000010400      0x75a
+.text           0x0000000000010400      0x903
                 0x0000000000010400                _text_start = .
  *(.text)
- .text          0x0000000000010400      0x49f ./bin/tmp/hex32kernel.o
+ .text          0x0000000000010400      0x18b ./bin/tmp/hex32kernel.o
                 0x0000000000010400                HexMain
-                0x0000000000010519                InitScreen
- *fill*         0x000000000001089f        0x1 
- .text          0x00000000000108a0       0x4f ./bin/tmp/hex32corelib_asm.o
-                0x00000000000108a0                OpHLT
-                0x00000000000108a2                OpCLI
-                0x00000000000108a4                OpSTI
-                0x00000000000108a6                OpSTIHLT
-                0x00000000000108a9                OpIn8
-                0x00000000000108b4                OpIn16
-                0x00000000000108c0                OpIn32
-                0x00000000000108c6                OpOut8
-                0x00000000000108d0                OpOut16
-                0x00000000000108db                OpOut32
-                0x00000000000108e5                LoadEFlags
-                0x00000000000108e8                StoreEFlags
- .text          0x00000000000108ef      0x26b ./bin/tmp/hex32corelib.o
-                0x00000000000108ef                SetPalette
-                0x000000000001098f                BoxFill
-                0x00000000000109de                InitializePalette
-                0x0000000000010a03                PutFont
-                0x0000000000010afb                PutString
-                0x0000000000010b5a                _text_end = .
+ *fill*         0x000000000001058b        0x1 
+ .text          0x000000000001058c       0x4f ./bin/tmp/hex32corelib_asm.o
+                0x000000000001058c                OpHLT
+                0x000000000001058e                OpCLI
+                0x0000000000010590                OpSTI
+                0x0000000000010592                OpSTIHLT
+                0x0000000000010595                OpIn8
+                0x00000000000105a0                OpIn16
+                0x00000000000105ac                OpIn32
+                0x00000000000105b2                OpOut8
+                0x00000000000105bc                OpOut16
+                0x00000000000105c7                OpOut32
+                0x00000000000105d1                LoadEFlags
+                0x00000000000105d4                StoreEFlags
+ .text          0x00000000000105db      0x728 ./bin/tmp/hex32corelib.o
+                0x00000000000105db                SetPalette
+                0x000000000001067b                BoxFill
+                0x00000000000106ca                InitializePalette
+                0x00000000000106ef                PutFont
+                0x00000000000107e7                PutBMPImage
+                0x000000000001084e                PutString
+                0x00000000000108ad                InitMouseCursor
+                0x000000000001097d                InitScreen
+ .text          0x0000000000010d03        0x0 ./bin/tmp/fonts/default.o
+ .text          0x0000000000010d03        0x0 ./bin/tmp/fonts/mousecursor.o
+                0x0000000000010d03                _text_end = .
 
-.iplt           0x0000000000010b60        0x0
- .iplt          0x0000000000010b60        0x0 ./bin/tmp/hex32kernel.o
+.iplt           0x0000000000010d08        0x0
+ .iplt          0x0000000000010d08        0x0 ./bin/tmp/hex32kernel.o
 
-.rodata         0x0000000000010b5a       0x10
-                0x0000000000010b5a                _rodata_start = .
+.rodata         0x0000000000010d03       0x10
+                0x0000000000010d03                _rodata_start = .
  *(.rodata)
- .rodata        0x0000000000010b5a       0x10 ./bin/tmp/hex32kernel.o
-                0x0000000000010b6a                _rodata_end = .
+ .rodata        0x0000000000010d03       0x10 ./bin/tmp/hex32kernel.o
+                0x0000000000010d13                _rodata_end = .
 
-.eh_frame       0x0000000000010b6c       0xfc
- .eh_frame      0x0000000000010b6c       0x5c ./bin/tmp/hex32kernel.o
- .eh_frame      0x0000000000010bc8       0xa0 ./bin/tmp/hex32corelib.o
-                                         0xb8 (緩和前のサイズ)
+.eh_frame       0x0000000000010d14      0x13c
+ .eh_frame      0x0000000000010d14       0x34 ./bin/tmp/hex32kernel.o
+ .eh_frame      0x0000000000010d48      0x108 ./bin/tmp/hex32corelib.o
+                                        0x120 (緩和前のサイズ)
 
-.rel.dyn        0x0000000000010c68        0x0
- .rel.got       0x0000000000010c68        0x0 ./bin/tmp/hex32kernel.o
- .rel.iplt      0x0000000000010c68        0x0 ./bin/tmp/hex32kernel.o
- .rel.text      0x0000000000010c68        0x0 ./bin/tmp/hex32kernel.o
+.rel.dyn        0x0000000000010e50        0x0
+ .rel.got       0x0000000000010e50        0x0 ./bin/tmp/hex32kernel.o
+ .rel.iplt      0x0000000000010e50        0x0 ./bin/tmp/hex32kernel.o
+ .rel.text      0x0000000000010e50        0x0 ./bin/tmp/hex32kernel.o
 
-.data           0x0000000000010c80     0x1030
-                0x0000000000010c80                _data_start = .
+.data           0x0000000000010e60     0x1140
+                0x0000000000010e60                _data_start = .
  *(.data)
- .data          0x0000000000010c80     0x1000 ./bin/tmp/hex32kernel.o
-                0x0000000000010c80                DEFBitmap
- .data          0x0000000000011c80       0x30 ./bin/tmp/hex32corelib.o
-                0x0000000000011cb0                _data_end = .
+ .data          0x0000000000010e60        0x0 ./bin/tmp/hex32kernel.o
+ .data          0x0000000000010e60       0x30 ./bin/tmp/hex32corelib.o
+ *fill*         0x0000000000010e90       0x10 
+ .data          0x0000000000010ea0     0x1000 ./bin/tmp/fonts/default.o
+                0x0000000000010ea0                DEFBitmap
+ .data          0x0000000000011ea0      0x100 ./bin/tmp/fonts/mousecursor.o
+                0x0000000000011ea0                CURBitmap
+                0x0000000000011fa0                _data_end = .
 
-.got            0x0000000000011cb0        0x0
- .got           0x0000000000011cb0        0x0 ./bin/tmp/hex32kernel.o
+.got            0x0000000000011fa0        0x0
+ .got           0x0000000000011fa0        0x0 ./bin/tmp/hex32kernel.o
 
-.got.plt        0x0000000000011cb0        0x0
- .got.plt       0x0000000000011cb0        0x0 ./bin/tmp/hex32kernel.o
+.got.plt        0x0000000000011fa0        0x0
+ .got.plt       0x0000000000011fa0        0x0 ./bin/tmp/hex32kernel.o
 
-.igot.plt       0x0000000000011cb0        0x0
- .igot.plt      0x0000000000011cb0        0x0 ./bin/tmp/hex32kernel.o
+.igot.plt       0x0000000000011fa0        0x0
+ .igot.plt      0x0000000000011fa0        0x0 ./bin/tmp/hex32kernel.o
 
-.bss            0x0000000000011cb0        0x0
-                0x0000000000011cb0                _bss_start = .
+.bss            0x0000000000011fa0        0x0
+                0x0000000000011fa0                _bss_start = .
  *(.bss)
- .bss           0x0000000000011cb0        0x0 ./bin/tmp/hex32kernel.o
- .bss           0x0000000000011cb0        0x0 ./bin/tmp/hex32corelib.o
-                0x0000000000011cb0                _bss_end = .
+ .bss           0x0000000000011fa0        0x0 ./bin/tmp/hex32kernel.o
+ .bss           0x0000000000011fa0        0x0 ./bin/tmp/hex32corelib.o
+ .bss           0x0000000000011fa0        0x0 ./bin/tmp/fonts/default.o
+ .bss           0x0000000000011fa0        0x0 ./bin/tmp/fonts/mousecursor.o
+                0x0000000000011fa0                _bss_end = .
 LOAD ./bin/tmp/hex32kernel.o
 LOAD ./bin/tmp/hex32corelib_asm.o
 LOAD ./bin/tmp/hex32corelib.o
+LOAD ./bin/tmp/fonts/default.o
+LOAD ./bin/tmp/fonts/mousecursor.o
 OUTPUT(./bin/tmp/hex32_tmp.o elf32-i386)
 
 .comment        0x0000000000000000       0x11
  .comment       0x0000000000000000       0x11 ./bin/tmp/hex32kernel.o
                                          0x12 (緩和前のサイズ)
  .comment       0x0000000000000011       0x12 ./bin/tmp/hex32corelib.o
+ .comment       0x0000000000000011       0x12 ./bin/tmp/fonts/default.o
+ .comment       0x0000000000000011       0x12 ./bin/tmp/fonts/mousecursor.o
