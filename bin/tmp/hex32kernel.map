@@ -8,72 +8,74 @@
 
                 0x0000000000010400                . = 0x10400
 
-.text           0x0000000000010400      0x53a
+.text           0x0000000000010400      0x796
                 0x0000000000010400                _text_start = .
  *(.text)
- .text          0x0000000000010400      0x3fb ./bin/tmp/hex32kernel.o
+ .text          0x0000000000010400      0x655 ./bin/tmp/hex32kernel.o
                 0x0000000000010400                HexMain
-                0x0000000000010450                InitializePalette
-                0x0000000000010475                InitScreen
- *fill*         0x00000000000107fb        0x1 
- .text          0x00000000000107fc       0x4f ./bin/tmp/hex32core_asm.o
-                0x00000000000107fc                OpHLT
-                0x00000000000107fe                OpCLI
-                0x0000000000010800                OpSTI
-                0x0000000000010802                OpSTIHLT
-                0x0000000000010805                OpIn8
-                0x0000000000010810                OpIn16
-                0x000000000001081c                OpIn32
-                0x0000000000010822                OpOut8
-                0x000000000001082c                OpOut16
-                0x0000000000010837                OpOut32
-                0x0000000000010841                LoadEFlags
-                0x0000000000010844                StoreEFlags
- .text          0x000000000001084b       0xef ./bin/tmp/hex32core.o
-                0x000000000001084b                SetPalette
-                0x00000000000108eb                BoxFill8
-                0x000000000001093a                _text_end = .
+                0x00000000000105b2                InitializePalette
+                0x00000000000105d7                InitScreen
+                0x000000000001095d                PutFont8
+ *fill*         0x0000000000010a55        0x3 
+ .text          0x0000000000010a58       0x4f ./bin/tmp/hex32core_asm.o
+                0x0000000000010a58                OpHLT
+                0x0000000000010a5a                OpCLI
+                0x0000000000010a5c                OpSTI
+                0x0000000000010a5e                OpSTIHLT
+                0x0000000000010a61                OpIn8
+                0x0000000000010a6c                OpIn16
+                0x0000000000010a78                OpIn32
+                0x0000000000010a7e                OpOut8
+                0x0000000000010a88                OpOut16
+                0x0000000000010a93                OpOut32
+                0x0000000000010a9d                LoadEFlags
+                0x0000000000010aa0                StoreEFlags
+ .text          0x0000000000010aa7       0xef ./bin/tmp/hex32core.o
+                0x0000000000010aa7                SetPalette
+                0x0000000000010b47                BoxFill8
+                0x0000000000010b96                _text_end = .
 
-.iplt           0x0000000000010940        0x0
- .iplt          0x0000000000010940        0x0 ./bin/tmp/hex32kernel.o
+.iplt           0x0000000000010b98        0x0
+ .iplt          0x0000000000010b98        0x0 ./bin/tmp/hex32kernel.o
 
-.rodata         0x000000000001093a        0x0
-                0x000000000001093a                _rodata_start = .
+.rodata         0x0000000000010b96        0x0
+                0x0000000000010b96                _rodata_start = .
  *(.rodata)
-                0x000000000001093a                _rodata_end = .
+                0x0000000000010b96                _rodata_end = .
 
-.eh_frame       0x000000000001093c       0xbc
- .eh_frame      0x000000000001093c       0x7c ./bin/tmp/hex32kernel.o
- .eh_frame      0x00000000000109b8       0x40 ./bin/tmp/hex32core.o
+.eh_frame       0x0000000000010b98       0xdc
+ .eh_frame      0x0000000000010b98       0x9c ./bin/tmp/hex32kernel.o
+ .eh_frame      0x0000000000010c34       0x40 ./bin/tmp/hex32core.o
                                          0x58 (緩和前のサイズ)
 
-.rel.dyn        0x00000000000109f8        0x0
- .rel.got       0x00000000000109f8        0x0 ./bin/tmp/hex32kernel.o
- .rel.iplt      0x00000000000109f8        0x0 ./bin/tmp/hex32kernel.o
- .rel.text      0x00000000000109f8        0x0 ./bin/tmp/hex32kernel.o
+.rel.dyn        0x0000000000010c74        0x0
+ .rel.got       0x0000000000010c74        0x0 ./bin/tmp/hex32kernel.o
+ .rel.iplt      0x0000000000010c74        0x0 ./bin/tmp/hex32kernel.o
+ .rel.text      0x0000000000010c74        0x0 ./bin/tmp/hex32kernel.o
 
-.data           0x0000000000010a00       0x30
-                0x0000000000010a00                _data_start = .
+.data           0x0000000000010c80     0x1030
+                0x0000000000010c80                _data_start = .
  *(.data)
- .data          0x0000000000010a00       0x30 ./bin/tmp/hex32kernel.o
- .data          0x0000000000010a30        0x0 ./bin/tmp/hex32core.o
-                0x0000000000010a30                _data_end = .
+ .data          0x0000000000010c80     0x1030 ./bin/tmp/hex32kernel.o
+                0x0000000000010c80                DEFBitmap
+ .data          0x0000000000011cb0        0x0 ./bin/tmp/hex32core.o
+                0x0000000000011cb0                _data_end = .
 
-.got            0x0000000000010a30        0x0
- .got           0x0000000000010a30        0x0 ./bin/tmp/hex32kernel.o
+.got            0x0000000000011cb0        0x0
+ .got           0x0000000000011cb0        0x0 ./bin/tmp/hex32kernel.o
 
-.got.plt        0x0000000000010a30        0x0
- .got.plt       0x0000000000010a30        0x0 ./bin/tmp/hex32kernel.o
+.got.plt        0x0000000000011cb0        0x0
+ .got.plt       0x0000000000011cb0        0x0 ./bin/tmp/hex32kernel.o
 
-.igot.plt       0x0000000000010a30        0x0
- .igot.plt      0x0000000000010a30        0x0 ./bin/tmp/hex32kernel.o
+.igot.plt       0x0000000000011cb0        0x0
+ .igot.plt      0x0000000000011cb0        0x0 ./bin/tmp/hex32kernel.o
 
-.bss            0x0000000000010a30        0x0
-                0x0000000000010a30                _bss_start = .
+.bss            0x0000000000011cb0        0x0
+                0x0000000000011cb0                _bss_start = .
  *(.bss)
- .bss           0x0000000000010a30        0x0 ./bin/tmp/hex32kernel.o
- .bss           0x0000000000010a30        0x0 ./bin/tmp/hex32core.o
-                0x0000000000010a30                _bss_end = .
+ .bss           0x0000000000011cb0        0x0 ./bin/tmp/hex32kernel.o
+ .bss           0x0000000000011cb0        0x0 ./bin/tmp/hex32core.o
+                0x0000000000011cb0                _bss_end = .
 LOAD ./bin/tmp/hex32kernel.o
 LOAD ./bin/tmp/hex32core_asm.o
 LOAD ./bin/tmp/hex32core.o

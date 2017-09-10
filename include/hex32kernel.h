@@ -17,6 +17,7 @@
 
 void InitializePalette(void);
 void InitScreen(unsigned char* vram, int screenx, int screeny);
+void PutFont8(char *vram, int vramx, int x, int y, char color, char *font);
 
 struct LoaderConf
 {

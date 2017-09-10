@@ -1,5 +1,6 @@
 #include <hex32core.h>
 #include <hex32kernel.h>
+#include "../fonts/default.c"
 
 void HexMain(void)
 {
@@ -16,6 +17,13 @@ void HexMain(void)
   screeny = lconf->ScreenY;
 
   InitScreen(vram, screenx, screeny);
+
+  PutFont8(lconf->VRAMOrigin, lconf->ScreenX,  8, 8, COL8_ffffff, DEFBitmap + 'A' * 16);
+  PutFont8(lconf->VRAMOrigin, lconf->ScreenX, 16, 8, COL8_ffffff, DEFBitmap + 'B' * 16);
+  PutFont8(lconf->VRAMOrigin, lconf->ScreenX, 24, 8, COL8_ffffff, DEFBitmap + 'C' * 16);
+  PutFont8(lconf->VRAMOrigin, lconf->ScreenX, 40, 8, COL8_ffffff, DEFBitmap + '1' * 16);
+  PutFont8(lconf->VRAMOrigin, lconf->ScreenX, 48, 8, COL8_ffffff, DEFBitmap + '2' * 16);
+  PutFont8(lconf->VRAMOrigin, lconf->ScreenX, 56, 8, COL8_ffffff, DEFBitmap + '3' * 16);
 
 
   for (;;)
@@ -83,5 +91,26 @@ void InitScreen(unsigned char* vram, int screenx, int screeny)
   BoxFill8(vram, screenx, COL8_848484, screenx - 47, screeny - 23, screenx - 47, screeny -  4);
   BoxFill8(vram, screenx, COL8_ffffff, screenx - 47, screeny -  3, screenx -  4, screeny -  3);
   BoxFill8(vram, screenx, COL8_ffffff, screenx -  3, screeny - 24, screenx -  3, screeny -  3);
+  return;
+}
+
+void PutFont8(char *vram, int vramx, int x, int y, char color, char *font)
+{
+  int i;
+  char *p, data;
+  for (i = 0; i < 16; i++)
+  {
+    p = vram + (y + i) * vramx + x;
+    data = font[i];
+    if ((data & 0x80) != 0) { p[0] = color; }
+    if ((data & 0x40) != 0) { p[1] = color; }
+    if ((data & 0x20) != 0) { p[2] = color; }
+    if ((data & 0x10) != 0) { p[3] = color; }
+    if ((data & 0x08) != 0) { p[4] = color; }
+    if ((data & 0x04) != 0) { p[5] = color; }
+    if ((data & 0x02) != 0) { p[6] = color; }
+    if ((data & 0x01) != 0) { p[7] = color; }
+  }
+
   return;
 }
