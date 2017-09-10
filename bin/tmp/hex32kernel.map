@@ -8,57 +8,59 @@
 
                 0x0000000000010400                . = 0x10400
 
-.text           0x0000000000010400      0x796
+.text           0x0000000000010400      0x75a
                 0x0000000000010400                _text_start = .
  *(.text)
- .text          0x0000000000010400      0x655 ./bin/tmp/hex32kernel.o
+ .text          0x0000000000010400      0x49f ./bin/tmp/hex32kernel.o
                 0x0000000000010400                HexMain
-                0x00000000000105b2                InitializePalette
-                0x00000000000105d7                InitScreen
-                0x000000000001095d                PutFont8
- *fill*         0x0000000000010a55        0x3 
- .text          0x0000000000010a58       0x4f ./bin/tmp/hex32core_asm.o
-                0x0000000000010a58                OpHLT
-                0x0000000000010a5a                OpCLI
-                0x0000000000010a5c                OpSTI
-                0x0000000000010a5e                OpSTIHLT
-                0x0000000000010a61                OpIn8
-                0x0000000000010a6c                OpIn16
-                0x0000000000010a78                OpIn32
-                0x0000000000010a7e                OpOut8
-                0x0000000000010a88                OpOut16
-                0x0000000000010a93                OpOut32
-                0x0000000000010a9d                LoadEFlags
-                0x0000000000010aa0                StoreEFlags
- .text          0x0000000000010aa7       0xef ./bin/tmp/hex32core.o
-                0x0000000000010aa7                SetPalette
-                0x0000000000010b47                BoxFill8
-                0x0000000000010b96                _text_end = .
+                0x0000000000010519                InitScreen
+ *fill*         0x000000000001089f        0x1 
+ .text          0x00000000000108a0       0x4f ./bin/tmp/hex32corelib_asm.o
+                0x00000000000108a0                OpHLT
+                0x00000000000108a2                OpCLI
+                0x00000000000108a4                OpSTI
+                0x00000000000108a6                OpSTIHLT
+                0x00000000000108a9                OpIn8
+                0x00000000000108b4                OpIn16
+                0x00000000000108c0                OpIn32
+                0x00000000000108c6                OpOut8
+                0x00000000000108d0                OpOut16
+                0x00000000000108db                OpOut32
+                0x00000000000108e5                LoadEFlags
+                0x00000000000108e8                StoreEFlags
+ .text          0x00000000000108ef      0x26b ./bin/tmp/hex32corelib.o
+                0x00000000000108ef                SetPalette
+                0x000000000001098f                BoxFill
+                0x00000000000109de                InitializePalette
+                0x0000000000010a03                PutFont
+                0x0000000000010afb                PutString
+                0x0000000000010b5a                _text_end = .
 
-.iplt           0x0000000000010b98        0x0
- .iplt          0x0000000000010b98        0x0 ./bin/tmp/hex32kernel.o
+.iplt           0x0000000000010b60        0x0
+ .iplt          0x0000000000010b60        0x0 ./bin/tmp/hex32kernel.o
 
-.rodata         0x0000000000010b96        0x0
-                0x0000000000010b96                _rodata_start = .
+.rodata         0x0000000000010b5a       0x10
+                0x0000000000010b5a                _rodata_start = .
  *(.rodata)
-                0x0000000000010b96                _rodata_end = .
+ .rodata        0x0000000000010b5a       0x10 ./bin/tmp/hex32kernel.o
+                0x0000000000010b6a                _rodata_end = .
 
-.eh_frame       0x0000000000010b98       0xdc
- .eh_frame      0x0000000000010b98       0x9c ./bin/tmp/hex32kernel.o
- .eh_frame      0x0000000000010c34       0x40 ./bin/tmp/hex32core.o
-                                         0x58 (緩和前のサイズ)
+.eh_frame       0x0000000000010b6c       0xfc
+ .eh_frame      0x0000000000010b6c       0x5c ./bin/tmp/hex32kernel.o
+ .eh_frame      0x0000000000010bc8       0xa0 ./bin/tmp/hex32corelib.o
+                                         0xb8 (緩和前のサイズ)
 
-.rel.dyn        0x0000000000010c74        0x0
- .rel.got       0x0000000000010c74        0x0 ./bin/tmp/hex32kernel.o
- .rel.iplt      0x0000000000010c74        0x0 ./bin/tmp/hex32kernel.o
- .rel.text      0x0000000000010c74        0x0 ./bin/tmp/hex32kernel.o
+.rel.dyn        0x0000000000010c68        0x0
+ .rel.got       0x0000000000010c68        0x0 ./bin/tmp/hex32kernel.o
+ .rel.iplt      0x0000000000010c68        0x0 ./bin/tmp/hex32kernel.o
+ .rel.text      0x0000000000010c68        0x0 ./bin/tmp/hex32kernel.o
 
 .data           0x0000000000010c80     0x1030
                 0x0000000000010c80                _data_start = .
  *(.data)
- .data          0x0000000000010c80     0x1030 ./bin/tmp/hex32kernel.o
+ .data          0x0000000000010c80     0x1000 ./bin/tmp/hex32kernel.o
                 0x0000000000010c80                DEFBitmap
- .data          0x0000000000011cb0        0x0 ./bin/tmp/hex32core.o
+ .data          0x0000000000011c80       0x30 ./bin/tmp/hex32corelib.o
                 0x0000000000011cb0                _data_end = .
 
 .got            0x0000000000011cb0        0x0
@@ -74,14 +76,14 @@
                 0x0000000000011cb0                _bss_start = .
  *(.bss)
  .bss           0x0000000000011cb0        0x0 ./bin/tmp/hex32kernel.o
- .bss           0x0000000000011cb0        0x0 ./bin/tmp/hex32core.o
+ .bss           0x0000000000011cb0        0x0 ./bin/tmp/hex32corelib.o
                 0x0000000000011cb0                _bss_end = .
 LOAD ./bin/tmp/hex32kernel.o
-LOAD ./bin/tmp/hex32core_asm.o
-LOAD ./bin/tmp/hex32core.o
+LOAD ./bin/tmp/hex32corelib_asm.o
+LOAD ./bin/tmp/hex32corelib.o
 OUTPUT(./bin/tmp/hex32_tmp.o elf32-i386)
 
 .comment        0x0000000000000000       0x11
  .comment       0x0000000000000000       0x11 ./bin/tmp/hex32kernel.o
                                          0x12 (緩和前のサイズ)
- .comment       0x0000000000000011       0x12 ./bin/tmp/hex32core.o
+ .comment       0x0000000000000011       0x12 ./bin/tmp/hex32corelib.o

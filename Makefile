@@ -8,17 +8,17 @@ output_dir=./bin
 default: compile link img run
 
 .PHONY compile:
-compile: arch/x86/boot/loader.asm arch/x86/entry/setup.asm arch/x86/kernel/hex32core.asm kernel/hex32core.c kernel/hex32kernel.c
-	./tools/BitmapFontGenerator/bin/BitmapFontGenerator.o ./fonts/bitmap/default.txt ./fonts/default.c DEFBitmap
+compile: arch/x86/boot/loader.asm arch/x86/entry/setup.asm arch/x86/lib/hex32corelib.asm lib/hex32corelib.c kernel/hex32kernel.c
+	./tools/BitmapFontGenerator/bin/BitmapFontGenerator.o ./fonts/bitmap/default.txt ./fonts/default.c DEFBitmap 4096
 	nasm -f bin  -i $(nasminc) -o $(tmpoutput_dir)/loader.bin arch/x86/boot/loader.asm
 	nasm -f bin  -i $(nasminc) -o $(tmpoutput_dir)/setup.bin arch/x86/entry/setup.asm
-	nasm -f coff -i $(nasminc) -o $(tmpoutput_dir)/hex32core_asm.o arch/x86/kernel/hex32core.asm
-	i386-elf-gcc -I $(gccinc)  -o $(tmpoutput_dir)/hex32core.o -c kernel/hex32core.c
+	nasm -f coff -i $(nasminc) -o $(tmpoutput_dir)/hex32corelib_asm.o arch/x86/lib/hex32corelib.asm
+	i386-elf-gcc -I $(gccinc)  -o $(tmpoutput_dir)/hex32corelib.o -c lib/hex32corelib.c
 	i386-elf-gcc -I $(gccinc)  -o $(tmpoutput_dir)/hex32kernel.o -c kernel/hex32kernel.c
 
 .PHONY link:
-link: bin/tmp/loader.bin $(tmpoutput_dir)/setup.bin $(tmpoutput_dir)/hex32kernel.o $(tmpoutput_dir)/hex32core_asm.o $(tmpoutput_dir)/hex32core.o
-	i386-elf-ld -T hex32kernel.ld -Map $(tmpoutput_dir)/hex32kernel.map -nostdlib -o $(tmpoutput_dir)/hex32_tmp.o $(tmpoutput_dir)/hex32kernel.o $(tmpoutput_dir)/hex32core_asm.o $(tmpoutput_dir)/hex32core.o
+link: bin/tmp/loader.bin $(tmpoutput_dir)/setup.bin $(tmpoutput_dir)/hex32kernel.o $(tmpoutput_dir)/hex32corelib_asm.o $(tmpoutput_dir)/hex32corelib.o
+	i386-elf-ld -T hex32kernel.ld -Map $(tmpoutput_dir)/hex32kernel.map -nostdlib -o $(tmpoutput_dir)/hex32_tmp.o $(tmpoutput_dir)/hex32kernel.o $(tmpoutput_dir)/hex32corelib_asm.o $(tmpoutput_dir)/hex32corelib.o
 	i386-elf-objcopy -R .note -R.comment -S -O binary $(tmpoutput_dir)/hex32_tmp.o $(tmpoutput_dir)/hex32.bin 
 	cat $(tmpoutput_dir)/loader.bin $(tmpoutput_dir)/setup.bin $(tmpoutput_dir)/hex32.bin > $(tmpoutput_dir)/bootimg.bin
 
