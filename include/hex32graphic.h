@@ -15,3 +15,12 @@
 #define COL8_008484 14
 #define COL8_848484 15
 
+// Draw
+void PutFont(char *vram, int vramx, int x, int y, char color, char *font);
+void PutBMPImage(char *vram, int vramx, int picturex, int picturey,
+  int posx, int posy, char *bmap, int bufferx);
+void PutString(char *vram, int vramx, int x, int y, char color, char *bmap, unsigned char *string);
+void SetPalette(int start, int end, unsigned char *rgb);
+void BoxFill(unsigned char* origin, int vramx, unsigned char value, int startx, int starty, int endx, int endy);
+void PutBMPImage(char *vram, int vramx, int picturex, int picturey,
+  int posx, int posy, char *bmap, int bufferx);
