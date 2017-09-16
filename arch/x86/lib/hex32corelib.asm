@@ -11,6 +11,8 @@ segment .text
 [global OpOut32]
 [global LoadEFlags]
 [global StoreEFlags]
+[global LoadGDTR]
+[global LoadIDTR]
 
 ; void OpHlt(void);
 OpHLT:
@@ -86,3 +88,15 @@ StoreEFlags:
   push eax
   popfd
   ret
+
+LoadGDTR:
+	mov ax, [esp+4]
+	mov [esp+6], ax
+	lgdt [esp+6]
+	ret
+
+LoadIDTR:
+	mov ax, [esp+4]
+	mov [esp+6], ax
+	lidt[esp+6]
+	ret

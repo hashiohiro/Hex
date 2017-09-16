@@ -3,7 +3,7 @@ ENTRY("HexMain")
 
 SECTIONS
 {
-  . = 0x10400;
+  . = 0x10000;
   .text :
   {
     _text_start = .;

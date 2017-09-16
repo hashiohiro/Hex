@@ -159,6 +159,6 @@ gdt:
   dd 0x8000ffff, 0x0040920b
 gdt_end:
 
-pad:
+signature:
   times 510-($-$$) db 0
   db 0x55,0xaa
